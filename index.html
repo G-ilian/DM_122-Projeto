@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.min.css"
+    />
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <main>
+        <h1>Star Wars - Wiki Data</h1>
+        <form onsubmit="return false;">
+            <fieldset role="group">
+              <input
+                type="text"
+                name="character"
+                required
+                placeholder="Enter the character name"
+                autocomplete="off"
+              />
+              <button type="submit">Get</button>
+            </fieldset>
+        </form>
+        <p>*<a href="#" onclick="return false;">Install data locally</a>, so you can search characters offline</p>
+                <!-- Card container -->
+        <article id="characterCard">
+            <header>
+                <h2 id="characterName">Oi</h2>
+            </header>
+                <ul>
+                    <li><strong>Height:</strong> <span id="characterHeight"></span></li>
+                    <li><strong>Gender:</strong> <span id="characterGender"></span></li>
+                    <li><strong>Homeworld:</strong> <span id="characterHomeworld"></span></li>
+                    <li><strong>Films:</strong> <ul id="characterFilms"></ul></li>
+                </ul>
+        </article>
+
+
+    </main>
+</body>
+</html>
