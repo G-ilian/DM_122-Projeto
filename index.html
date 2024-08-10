@@ -15,12 +15,12 @@
         <h1>Star Wars - Wiki Data</h1>
         <form onsubmit="return false;">
             <fieldset role="group">
-              <input
-                type="text"
-                name="character"
+                <input
+                type="number"
+                name="characterId"
                 required
-                placeholder="Enter the character name"
-                autocomplete="off"
+                placeholder="Enter the character ID"
+                min="1"
               />
               <button type="submit">Get</button>
             </fieldset>
