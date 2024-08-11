@@ -8,10 +8,16 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.min.css"
     />
+    <link rel="stylesheet" href="style.css">
     <script type="module" src="app.js"></script>
+    <script type="module" src="load-screen.js"></script>
 </head>
 <body>
-    <main>
+    <div id="load-screen">
+        <img src="images/starwars_background.jpg" alt="">
+        <progress value="0" max="100"/>
+    </div>
+    <main style="display: none;">
         <h1>Star Wars - Wiki Data</h1>
         <form onsubmit="return false;">
             <fieldset role="group">
@@ -25,11 +31,11 @@
               <button type="submit">Get</button>
             </fieldset>
         </form>
-        <p>*<a href="#" onclick="return false;">Install data locally</a>, so you can search characters offline</p>
-                <!-- Card container -->
+        <!-- <p>*<a href="#" onclick="return false;">Install data locally</a>, so you can search characters offline</p> -->
+        <!-- Card container -->
         <article id="characterCard">
             <header>
-                <h2 id="characterName">Oi</h2>
+                <h2 id="characterName"></h2>
             </header>
                 <ul>
                     <li><strong>Height:</strong> <span id="characterHeight"></span></li>

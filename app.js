@@ -9,6 +9,10 @@ async function getCharacterData(id){
     // Criar a lógica para esse caso aqui
 }
 function fillCard(characterData){
+    if(!characterData){
+        alert('Personagem não encontrado');
+        return;
+    }
     const characterName = document.querySelector('#characterName');
     const characterHeight = document.querySelector('#characterHeight');
     const characterGender = document.querySelector('#characterGender');
@@ -29,16 +33,16 @@ function fillCard(characterData){
     
 }
 
-const linkToInstall = document.querySelector("a[href='#']");
-linkToInstall.addEventListener('click', async () => {
-    console.log("Installing data")
-    const { installData } = await import('./install-data/index.js');
-    alert('Installing data');
-    // button.disabled = true;
-    // button.setAttribute('aria-busy', true);
-    // await installData();
-    // button.removeAttribute('aria-busy');
-});
+// const linkToInstall = document.querySelector("a[href='#']");
+// linkToInstall.addEventListener('click', async () => {
+//     console.log("Installing data")
+//     const { installData } = await import('./install-data/index.js');
+//     alert('Installing data');
+//     // button.disabled = true;
+//     // button.setAttribute('aria-busy', true);
+//     // await installData();
+//     // button.removeAttribute('aria-busy');
+// });  
 
 function setLoading(isLoading){
     const submitButton = form.querySelector('button[type="submit"]');

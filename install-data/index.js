@@ -54,6 +54,4 @@ export async function installData(){
     const db = await getDB();
 
     return db.starWars.bulkAdd(starWarsList);
-
-
 }
