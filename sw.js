@@ -27,13 +27,18 @@ async function installStaticAssets(){
             "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.min.css",
             "https://cdn.jsdelivr.net/npm/dexie@4.0.8/+esm",    
             "./",
-            "/index.html",
-            "/app.js",  
+            "./index.html",
+            "./app.js",  
             "./helpers/database.js",
             "./helpers/install-sw.js",
             "./install-data/index.js",
-            "/styles.css",
-            
+            "./style.css",
+            "./load-screen.js",
+            "./images/starwars_background.jpg",
+            "./images/logo-site.png",
+            "./images/favicon-16x16.png",
+            "./images/favicon-32x32.png",
+            "./images/favicon.ico",
         ])
     })
 }
