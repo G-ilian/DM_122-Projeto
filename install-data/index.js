@@ -9,7 +9,6 @@ export async function fetchCharactersData(id){
     const character = await response.json();
 
     const characterDetails = {
-        id: id,
         name: character.name,
         height: character.height,
         gender: character.gender,
@@ -32,7 +31,6 @@ export async function fetchCharactersData(id){
 
 export function starWarsMapper(characterData){
     return {
-        id: parseInt(characterData.id) || Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000,
         name: characterData.name || '',
         height: characterData.height || 0,
         gender: characterData.gender || 'n/a',
@@ -49,7 +47,7 @@ async function getDB(){
 export async function installData(){
     // Get data from the api for 50 characters
     const promiseList = await Promise.allSettled(
-        Array.from({length: 83}, (_, index) => fetchCharactersData(index + 1))
+        Array.from({length: 15}, (_, index) => fetchCharactersData(index + 1))
     );
     const starWarsListData = promiseList.filter(promise => promise.status === 'fulfilled' && promise.value!==null).map(promise => promise.value);
     const starWarsList = starWarsListData.map(starWarsMapper);

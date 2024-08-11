@@ -19,11 +19,26 @@ export async function editCharacter() {
   const dialog = document.querySelector("dialog");
   const form = dialog.querySelector("form");
   const db = await getStarwarsDatabase();
+  console.log('Id do personagem:',currentCharacterId);
   const characterData = await db.starWars.get(currentCharacterId);
   form.elements["first_name"].value = characterData.name;
   form.elements["height"].value = characterData.height;
   form.elements["homeworld"].value = characterData.homeworld;
 
+  Array.from(form.elements["gender"].options).forEach(option => {
+    if(characterData.gender.includes(option.text)){
+      option.selected = true;
+    }else{
+      option.selected = false;
+    }
+  });
+  Array.from(form.elements["films"].options).forEach(option => {
+    if (characterData.films.includes(option.text)) {
+      option.selected = true;
+    } else {
+      option.selected = false;
+    }
+  });
   dialog.showModal();
 
   dialog.addEventListener("click", (event) => {
@@ -32,8 +47,7 @@ export async function editCharacter() {
     }
   });
 
-  // Configura os botões de confirmar e cancelar
-  dialog.querySelector('#confirm').addEventListener('click', () => handleConfirm(dialog,form));
+  dialog.querySelector('#confirm').addEventListener('click', () => handleEdit(dialog,form));
 
   dialog.querySelector("#cancel").addEventListener("click", () => {handleClose(dialog);});
 }
@@ -65,14 +79,17 @@ export async function addCharacter() {
     cancelButton.addEventListener("click", () => handleClose(dialog));
 }
 
-
-async function handleConfirm(dialog,form) {
+async function handleEdit(dialog,form) {
     const db = await getStarwarsDatabase();
     const name= form.elements["first_name"].value;
     const height= form.elements["height"].value;
     const homeworld= form.elements["homeworld"].value;
+    const gender = form.elements["gender"].options[form.elements["gender"].selectedIndex].text;
+    const films = Array.from(form.elements["films"].selectedOptions).map(option => option.text);
+    const id = currentCharacterId
+    const data = starWarsMapper({name, height, gender, homeworld, films});
 
-    await db.starWars.update(currentCharacterId, { name, height, homeworld });
+    await db.starWars.update(id, data);
 
     const characterData = await db.starWars.get(currentCharacterId);
     fillCard(characterData);
@@ -88,8 +105,11 @@ async function handleAdd(dialog, form) {
     const name = form.elements["first_name"].value;
     const height = form.elements["height"].value;
     const homeworld = form.elements["homeworld"].value;
+    const gender = form.elements["gender"].options[form.elements["gender"].selectedIndex].text;
+    const films = Array.from(form.elements["films"].selectedOptions).map(option => option.text);
+    const data = starWarsMapper({name, height, gender, homeworld, films});
 
-    await db.starWars.add(starWarsMapper({ name, height, homeworld }));
+    await db.starWars.add(data);
     dialog.close();
     form.reset();
 }
@@ -137,11 +157,6 @@ form.addEventListener("submit", async (event) => {
   const characterId = form.elements["characterId"].value.trim();
   const characterCard = document.getElementById("characterCard");
 
-  // if (characterId === "") {
-  //   characterCard.style.display = "none";
-  //   setLoading(false);
-  //   return;
-  // }
   try{
     const characterData = await getCharacterData(characterId);
     fillCard(characterData);
@@ -151,12 +166,7 @@ form.addEventListener("submit", async (event) => {
   }finally{
     setLoading(false);
   }
-  // const characterData = await getCharacterData(characterId);
-  // fillCard(characterData);
-  // setLoading(false);
 });
 
 registerServiceWorker();
-// TODO : Separar os arquivos para modal.js
-// TODO: Separar os arquivos para ter o DAO.js
 // TODO : Colocar combo box para selecionar os filmes e gender

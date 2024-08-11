@@ -3,7 +3,7 @@ export default async function getStarwarsDatabase(){
     const db = new Dexie('starWarsDatabase');
     
     db.version(1).stores({
-        starWars: '&id,name',
+        starWars: '++id,name',
     });
     return db;
 }

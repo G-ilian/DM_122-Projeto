@@ -20,7 +20,7 @@ self.addEventListener('fetch', async (event) => {
     event.respondWith(cacheFirst(event.request));
 });
 
-const CACHE_VERSION_KEY = 'sw-cache-v1';
+const CACHE_VERSION_KEY = 'sw-cache-v7';
 async function installStaticAssets(){
     return caches.open(CACHE_VERSION_KEY).then((cache) => {
         cache.addAll([
