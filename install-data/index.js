@@ -3,6 +3,9 @@ export async function fetchCharactersData(id){
     await new Promise(resolve => setTimeout(resolve, 400));
 
     const response = await fetch(`https://swapi.dev/api/people/${id}/`);
+
+    if(!response.ok)
+        throw new Error('Character not found');
     const character = await response.json();
 
     const characterDetails = {
@@ -63,9 +66,17 @@ async function saveToLocalDB(characterData){
 }
 
 export async function getFromNetwork(characterId){
-    const characterData = await fetchCharactersData(characterId);
-    const characterMapped = starWarsMapper(characterData);
-    console.log(characterMapped);
-    await saveToLocalDB(characterMapped);
-    return characterMapped;
+    try{
+        const characterData = await fetchCharactersData(characterId);
+        console.log(characterData)
+        if(!characterData)
+            throw new Error('Character not found');
+
+        const characterMapped = starWarsMapper(characterData);
+        await saveToLocalDB(characterMapped);
+        return characterMapped;
+    }catch(error){
+        console.error('Error fetching character data:',error);
+        return null;
+    }
 }

@@ -97,11 +97,11 @@ async function handleAdd(dialog, form) {
 function fillCard(characterData) {
   const characterCard = document.getElementById("characterCard");
 
-//   if (!characterData) {
-//     alert("Personagem não encontrado");
-//     characterCard.style.display = "none";
-//     return;
-//   }
+  if (!characterData) {
+    alert("Personagem não encontrado");
+    characterCard.style.display = "none";
+    return;
+  }
   const characterName = document.querySelector("#characterName");
   const characterHeight = document.querySelector("#characterHeight");
   const characterGender = document.querySelector("#characterGender");
@@ -135,18 +135,25 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   setLoading(true);
   const characterId = form.elements["characterId"].value.trim();
-  console.log(`Fetching data for character ${characterId}`);
   const characterCard = document.getElementById("characterCard");
 
-  console.log(characterId);
-  if (characterId === "") {
-    characterCard.style.display = "none";
+  // if (characterId === "") {
+  //   characterCard.style.display = "none";
+  //   setLoading(false);
+  //   return;
+  // }
+  try{
+    const characterData = await getCharacterData(characterId);
+    fillCard(characterData);
+  }catch(error){
+    console.error(error);
+    alert("Personagem não encontrado");
+  }finally{
     setLoading(false);
-    return;
   }
-  const characterData = await getCharacterData(characterId);
-  fillCard(characterData);
-  setLoading(false);
+  // const characterData = await getCharacterData(characterId);
+  // fillCard(characterData);
+  // setLoading(false);
 });
 
 registerServiceWorker();
