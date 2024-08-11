@@ -29,28 +29,22 @@ async function loadData() {
     // Start the install process
     const installProcess = installData();
 
-    // Continuar verificando o progresso
     const checkInterval = setInterval(async () => {
-        // Verifique o número de personagens instalados atualmente
         const db = await getStarwarsDatabase();
         const currentCount = await db.starWars.count();
 
-        // Se o número mudou, atualize a barra de progresso
         if (currentCount > installedCharacters) {
             installedCharacters = currentCount;
             updateInstalledCharacters();
         }
 
-        // Se a instalação estiver completa, pare o intervalo
         if (installedCharacters >= totalCharacters) {
             clearInterval(checkInterval);
         }
-    }, 100); // Verifica a cada 100ms
+    }, 100); 
 
-    // Aguarde a conclusão do processo de instalação
     await installProcess;
 
-    // Verifique novamente se a instalação foi concluída
     if (installedCharacters >= totalCharacters) {
         document.getElementById('load-screen').style.display = 'none';
         document.querySelector('main').style.display = 'block';

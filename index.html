@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="style.css">
     <script type="module" src="app.js"></script>
     <script type="module" src="load-screen.js"></script>
+    <script type="module"> 
+        import {editCharacter, removeCharacter} from './app.js';
+        window.editCharacter = editCharacter;
+        window.removeCharacter = removeCharacter;
+    </script>
 </head>
 <body>
     <div id="load-screen">
@@ -23,8 +28,7 @@
             <fieldset role="group">
                 <input
                 type="number"
-                name="characterId"
-                required
+                name="characterId"  
                 placeholder="Enter the character ID"
                 min="1"
               />
@@ -34,8 +38,8 @@
         <!-- <p>*<a href="#" onclick="return false;">Install data locally</a>, so you can search characters offline</p> -->
         <!-- Card container -->
         <article id="characterCard">
-            <header>
-                <h2 id="characterName"></h2>
+            <header>    
+                <h2 id="characterName">oiii</h2>
             </header>
                 <ul>
                     <li><strong>Height:</strong> <span id="characterHeight"></span></li>
@@ -43,7 +47,56 @@
                     <li><strong>Homeworld:</strong> <span id="characterHomeworld"></span></li>
                     <li><strong>Films:</strong> <ul id="characterFilms"></ul></li>
                 </ul>
+            <footer>
+                <tr>
+                    <td style="width: 30px">
+                    <span style="cursor: pointer" onclick="editCharacter()">✏️</span>
+                    </td>
+                    <td style="width: 30px">
+                    <span style="cursor: pointer" onclick="removeCharacter()">🗑️</span>
+                    </td>
+                </tr>
+            </footer>    
         </article>
+
+        <dialog closed>
+            <article>
+                <main>
+                    <form>
+                        <fieldset>
+                          <label>
+                            Name
+                            <input
+                              name="first_name"
+                            />
+                          </label>
+                          <label>
+                            Height
+                            <input
+                              type="number"
+                              name="height"
+                              autocomplete="email"
+                              min = 10
+                              max = 250
+                            />
+                          </label>
+                          <label>
+                            Homeworld
+                            <input
+                              type="text"
+                              name="homeworld"
+                              autocomplete="email"
+                            />
+                          </label>
+                        </fieldset>     
+                      </form>
+                </main>
+                <footer>
+                    <button id="cancel">Cancel</button>
+                    <button id="confirm">Confirm</button>
+                </footer>
+            </article>
+        </dialog>
 
 
     </main>

@@ -21,3 +21,29 @@ html {
     width: 100%;
     height: 100%;
 }
+
+#characterCard {
+    display: none;    
+    border: 1px solid #ccc;
+    border-radius: 8px; 
+    max-width: 450px; 
+    margin: 20px auto; 
+    background-color: #959591;      
+}
+
+#characterCard header {
+    background-color: #333; /* Cor de fundo escura */
+    border-radius: 5px; /* Cantos arredondados */
+}
+
+#characterCard header h2 {
+    margin: 0; /* Remove a margem padrão do h2 */
+    font-size: 1.2em; /* Tamanho da fonte do h2 */
+    color: #fff; /* Cor da fonte branca */
+}
+#characterCard ul li {
+    list-style: none; /* Remove as bolinhas da lista */
+}
+#characterCard span {
+    font-weight: bold; /* Destaca o texto dos valores */
+}   
