@@ -1,4 +1,6 @@
 import getStarwarsDatabase from "./helpers/database.js";
+import { starWarsMapper } from "./install-data/index.js";
+
 let currentCharacterId = null;
 
 async function getCharacterData(id) {
@@ -21,7 +23,6 @@ export async function editCharacter() {
 
   dialog.showModal();
 
-  // Configura o evento de clicar fora do modal para fechar
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) {
       dialog.close();
@@ -29,24 +30,9 @@ export async function editCharacter() {
   });
 
   // Configura os botões de confirmar e cancelar
-  dialog.querySelector("#confirm").addEventListener("click", async () => {
-    console.log('confirm'); 
-    const name = form.elements["first_name"].value;
-    const height = form.elements["height"].value;
-    const homeworld = form.elements["homeworld"].value;
+  dialog.querySelector('#confirm').addEventListener('click', () => handleConfirm(dialog,form));
 
-    await db.starWars.update(currentCharacterId, { name, height, homeworld });
-
-    // // Atualize o card com as novas informações
-    const characterData = await db.starWars.get(currentCharacterId);
-    fillCard(characterData);
-
-    dialog.close(); // Fecha o modal
-  });
-
-  dialog.querySelector("#cancel").addEventListener("click", () => {
-    dialog.close();
-  });
+  dialog.querySelector("#cancel").addEventListener("click", () => {handleClose(dialog);});
 }
 
 export async function removeCharacter() {
@@ -59,6 +45,52 @@ export async function removeCharacter() {
     currentCharacterId = null;
   }
 }
+
+export async function addCharacter() {
+    console.log('Add character');
+    const dialog = document.querySelector("dialog");
+    const form = dialog.querySelector("form");
+    dialog.showModal();
+
+    const confirmButton = dialog.querySelector("#confirm");
+    const cancelButton = dialog.querySelector("#cancel");
+    confirmButton.removeEventListener("click", handleAdd);
+    cancelButton.removeEventListener("click", handleClose);
+
+    // Adicionar novos event listeners
+    confirmButton.addEventListener("click", () => handleAdd(dialog, form));
+    cancelButton.addEventListener("click", () => handleClose(dialog));
+}
+
+
+async function handleConfirm(dialog,form) {
+    const db = await getStarwarsDatabase();
+    const name= form.elements["first_name"].value;
+    const height= form.elements["height"].value;
+    const homeworld= form.elements["homeworld"].value;
+
+    await db.starWars.update(currentCharacterId, { name, height, homeworld });
+
+    const characterData = await db.starWars.get(currentCharacterId);
+    fillCard(characterData);
+    dialog.close(); 
+}
+
+async function handleClose(dialog){
+    dialog.close();
+}
+
+async function handleAdd(dialog, form) {
+    const db = await getStarwarsDatabase();
+    const name = form.elements["first_name"].value;
+    const height = form.elements["height"].value;
+    const homeworld = form.elements["homeworld"].value;
+
+    await db.starWars.add(starWarsMapper({ name, height, homeworld }));
+    dialog.close();
+    form.reset();
+}
+
 function fillCard(characterData) {
   const characterCard = document.getElementById("characterCard");
 
@@ -113,3 +145,8 @@ form.addEventListener("submit", async (event) => {
   fillCard(characterData);
   setLoading(false);
 });
+
+
+// TODO : Separar os arquivos para modal.js
+// TODO: Separar os arquivos para ter o DAO.js
+// TODO : Colocar combo box para selecionar os filmes e gender

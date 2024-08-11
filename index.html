@@ -12,9 +12,10 @@
     <script type="module" src="app.js"></script>
     <script type="module" src="load-screen.js"></script>
     <script type="module"> 
-        import {editCharacter, removeCharacter} from './app.js';
+        import {editCharacter, removeCharacter,addCharacter} from './app.js';
         window.editCharacter = editCharacter;
         window.removeCharacter = removeCharacter;
+        window.addCharacter = addCharacter;
     </script>
 </head>
 <body>
@@ -35,6 +36,7 @@
               <button type="submit">Get</button>
             </fieldset>
         </form>
+        <button onclick="addCharacter()">Add</button>
         <!-- <p>*<a href="#" onclick="return false;">Install data locally</a>, so you can search characters offline</p> -->
         <!-- Card container -->
         <article id="characterCard">

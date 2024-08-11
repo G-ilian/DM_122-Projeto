@@ -28,10 +28,10 @@ export async function fetchCharactersData(id){
 
 export function starWarsMapper(characterData){
     return {
-        id: characterData.id,
-        name: characterData.name,
-        height: characterData.height,
-        gender: characterData.gender,
+        id: characterData.id || Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000,
+        name: characterData.name || '',
+        height: characterData.height || 0,
+        gender: characterData.gender || 'n/a',
         homeworld: characterData.homeworld || 'Unknown',
         films: characterData.films || []
     }
