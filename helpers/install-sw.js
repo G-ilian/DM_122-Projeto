@@ -1,9 +1,8 @@
 export async function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-        try {
-            await navigator.serviceWorker.register('../sw.js', { scope: "/" });
-        } catch (error) {
-            console.error('Failed to register service worker', error);
-        }
+        const sucess = ()=> console.log('Service Worker Registered');
+        const failure = ()=> console.log('Service Worker Registration Failed');
+
+        navigator.serviceWorker.register('./sw.js').then(sucess).catch(failure);
     }
 }
