@@ -169,4 +169,3 @@ form.addEventListener("submit", async (event) => {
 });
 
 registerServiceWorker();
-// TODO : Colocar combo box para selecionar os filmes e gender
