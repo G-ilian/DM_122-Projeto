@@ -1,5 +1,6 @@
 import getStarwarsDatabase from "./helpers/database.js";
 import { starWarsMapper } from "./install-data/index.js";
+import { registerServiceWorker } from './helpers/install-sw.js';
 
 let currentCharacterId = null;
 
@@ -8,7 +9,9 @@ async function getCharacterData(id) {
   let characterData = await db.starWars.get(parseInt(id));
 
   if (characterData) return characterData;
-  // Criar a lógica para esse caso aqui
+  const {getFromNetwork} = await import('./install-data/index.js');
+  characterData = await getFromNetwork(id);
+  return characterData;
 }
 
 export async function editCharacter() {
@@ -94,11 +97,11 @@ async function handleAdd(dialog, form) {
 function fillCard(characterData) {
   const characterCard = document.getElementById("characterCard");
 
-  if (!characterData) {
-    alert("Personagem não encontrado");
-    characterCard.style.display = "none";
-    return;
-  }
+//   if (!characterData) {
+//     alert("Personagem não encontrado");
+//     characterCard.style.display = "none";
+//     return;
+//   }
   const characterName = document.querySelector("#characterName");
   const characterHeight = document.querySelector("#characterHeight");
   const characterGender = document.querySelector("#characterGender");
@@ -146,7 +149,7 @@ form.addEventListener("submit", async (event) => {
   setLoading(false);
 });
 
-
+registerServiceWorker();
 // TODO : Separar os arquivos para modal.js
 // TODO: Separar os arquivos para ter o DAO.js
 // TODO : Colocar combo box para selecionar os filmes e gender

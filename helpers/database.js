@@ -5,6 +5,6 @@ export default async function getStarwarsDatabase(){
     db.version(1).stores({
         starWars: '&id,name',
     });
-
+    console.log(db)
     return db;
 }

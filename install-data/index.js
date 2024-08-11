@@ -38,7 +38,7 @@ export function starWarsMapper(characterData){
 }
 
 async function getDB(){
-    const {default: getStarwarsDatabase}= await import('../helpers/database.js');
+    const {default: getStarwarsDatabase} = await import('../helpers/database.js');
     return await getStarwarsDatabase();
 }
 
@@ -54,4 +54,17 @@ export async function installData(){
     const db = await getDB();
 
     return db.starWars.bulkAdd(starWarsList);
+}
+
+async function saveToLocalDB(characterData){
+    db = await getDB();
+    db.starWars.add(characterData).then((result)=>console.log(result));
+}
+
+export async function getFromNetwork(characterId){
+    const characterData = await fetchCharactersData(characterId);
+    const characterMapped = starWarsMapper(characterData);
+    console.log(characterMapped);
+    await saveToLocalDB(characterMapped);
+    return characterMapped;
 }
