@@ -2,31 +2,29 @@ import getStarwarsDatabase from './helpers/database.js';
 
 async function getCharacterData(id){
     const db = await getStarwarsDatabase();
-    console.log(db.starWars)
-    let characterData = await db.starWars.get(id);
+    let characterData = await db.starWars.get(parseInt(id));
 
     if(characterData)
         return characterData;
     // Criar a lógica para esse caso aqui
 }
 function fillCard(characterData){
-    console.log(characterData);
-    // const characterName = document.querySelector('.characterName');
-    // const characterHeight = document.querySelector('.characterHeight');
-    // const characterGender = document.querySelector('.characterGender');
-    // const characterHomeworld = document.querySelector('.characterHomeworld');
-    // const characterFilms = document.querySelector('.characterFilms');
+    const characterName = document.querySelector('#characterName');
+    const characterHeight = document.querySelector('#characterHeight');
+    const characterGender = document.querySelector('#characterGender');
+    const characterHomeworld = document.querySelector('#characterHomeworld');
+    const characterFilms = document.querySelector('#characterFilms');
 
-    // characterName.textContent = characterData.name;
-    // characterHeight.textContent = characterData.height;
-    // characterGender.textContent = characterData.gender;
-    // characterHomeworld.textContent = characterData.homeworld;
-    // characterFilms.innerHTML = '';
-    // characterData.films.forEach(film => {
-    //     const filmElement = document.createElement('li');
-    //     filmElement.textContent = film;
-    //     characterFilms.appendChild(filmElement);
-    // });
+    characterName.textContent = characterData.name;
+    characterHeight.textContent = characterData.height;
+    characterGender.textContent = characterData.gender;
+    characterHomeworld.textContent = characterData.homeworld;
+    characterFilms.innerHTML = '';
+    characterData.films.forEach(film => {
+        const filmElement = document.createElement('li');
+        filmElement.textContent = film;
+        characterFilms.appendChild(filmElement);
+    });
 
     
 }
