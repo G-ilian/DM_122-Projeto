@@ -1,3 +1,4 @@
+import getStarwarsDatabase from '../helpers/database.js';
 export async function fetchCharactersData(id){
     await new Promise(resolve => setTimeout(resolve, 400));
 
@@ -28,7 +29,7 @@ export async function fetchCharactersData(id){
 
 export function starWarsMapper(characterData){
     return {
-        id: characterData.id || Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000,
+        id: parseInt(characterData.id) || Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000,
         name: characterData.name || '',
         height: characterData.height || 0,
         gender: characterData.gender || 'n/a',
@@ -57,7 +58,7 @@ export async function installData(){
 }
 
 async function saveToLocalDB(characterData){
-    db = await getDB();
+    const db = await getStarwarsDatabase();
     db.starWars.add(characterData).then((result)=>console.log(result));
 }
 
