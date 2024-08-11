@@ -67,6 +67,7 @@ export async function addCharacter() {
     console.log('Add character');
     const dialog = document.querySelector("dialog");
     const form = dialog.querySelector("form");
+    form.reset();
     dialog.showModal();
 
     const confirmButton = dialog.querySelector("#confirm");
@@ -142,6 +143,15 @@ function fillCard(characterData) {
   characterCard.style.display = "block";
   currentCharacterId = characterData.id;
 }
+const linkToInstall = document.querySelector("a[href='#']");
+linkToInstall.addEventListener('click', async () => {
+    console.log("Installing data")
+    const { installData } = await import('./install-data/index.js');
+    alert('Installing data');
+    setLoading(true);
+    await installData();
+    setLoading(false);
+});
 
 function setLoading(isLoading) {
   const submitButton = form.querySelector('button[type="submit"]');

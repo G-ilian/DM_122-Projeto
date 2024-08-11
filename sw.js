@@ -20,7 +20,7 @@ self.addEventListener('fetch', async (event) => {
     event.respondWith(cacheFirst(event.request));
 });
 
-const CACHE_VERSION_KEY = 'sw-cache-v7';
+const CACHE_VERSION_KEY = 'sw-cache-v10';
 async function installStaticAssets(){
     return caches.open(CACHE_VERSION_KEY).then((cache) => {
         cache.addAll([
@@ -33,7 +33,6 @@ async function installStaticAssets(){
             "./helpers/install-sw.js",
             "./install-data/index.js",
             "./style.css",
-            "./load-screen.js",
             "./images/starwars_background.jpg",
             "./images/logo-site.png",
             "./images/favicon-16x16.png",
